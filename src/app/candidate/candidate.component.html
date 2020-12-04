@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Candidate</title>
+    <link rel="stylesheet" href="candidate.component.css" />
+  </head>
+  <body style="font-size: 1.3rem">
+    <form #userForm="ngForm" (ngSubmit)="uploadValues(userForm.value)">
+      <div>
+        <mat-grid-list
+          cols="2"
+          rowHeight="4rem"
+          style="background-color: #f8f8f8"
+        >
+          <mat-grid-tile>
+            <h1 style="padding-top: 1rem">Create Candidate</h1>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <button
+              type="submit"
+              mat-raised-button
+              class="btn btn-primary mr-4"
+              [disabled]="userForm.invalid"
+            >
+              Save
+            </button>
+            <button
+              type="reset"
+              mat-raised-button
+              class="btn btn-outline-secondary ml-3"
+            >
+              Cancel
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <br />
+        <h2 style="margin-left: 8rem">Basic Info</h2>
+        <mat-grid-list cols="4" rowHeight="7rem">
+          <mat-grid-tile>
+            <label style="color: silver">First Name</label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field
+              style="border-radius: 10%; text-decoration: black; width: 5rem"
+              appearance="standard"
+            >
+              <mat-label>Title</mat-label>
+              <mat-select
+                required
+                [(ngModel)]="candidateForm.title"
+                name="title"
+              >
+                <mat-option
+                  *ngFor="let gender of genders"
+                  [value]="gender.value"
+                >
+                  {{ gender.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              style="width: 22rem"
+              appearance="standard"
+              color="accent"
+            >
+              <mat-label style="color: black">First Name</mat-label>
+              <input
+                matInput
+                required
+                name="name"
+                [(ngModel)]="candidateForm.name"
+              />
+              <mat-error> Name is <strong>required</strong> </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">E-Mail</label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">E-Mail</mat-label>
+              <input
+                #var1="ngModel"
+                style="width: 20rem"
+                matInput
+                required
+                type="email"
+                name="email"
+                [(ngModel)]="candidateForm.email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              />
+              <mat-error *ngIf="var1.errors?.required">
+                Email is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="var1.errors?.pattern">
+                Email is <strong>Invalid</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <!-- 2 -->
+
+        <mat-grid-list cols="4" rowHeight="7rem">
+          <mat-grid-tile>
+            <label style="color: silver">Mobile No.</label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Mobile No.</mat-label>
+              <input
+                #var2="ngModel"
+                style="width: 20rem"
+                matInput
+                required
+                type="text"
+                name="mobile"
+                minlength="10"
+                maxlength="10"
+                [(ngModel)]="candidateForm.mobile"
+                pattern="[0-9]{1,10}$"
+              />
+              <mat-error *ngIf="var2.errors?.required">
+                Mobile No. is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="var2.errors?.pattern">
+                Only <strong> Numerical</strong> Values
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Website</label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Website</mat-label>
+              <input
+                #var3="ngModel"
+                [(ngModel)]="candidateForm.website"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="website"
+                pattern="[w]+[.]+[a-z]+[.]+[a-z]{2,4}$"
+              />
+              <mat-error *ngIf="var3.errors?.pattern">
+                Website is <strong>Invalid</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- 3 -->
+
+        <mat-grid-list cols="4" rowHeight="7rem">
+          <mat-grid-tile>
+            <label style="color: silver">Secondary Email</label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Secondary Email</mat-label>
+              <input
+                required
+                #var4="ngModel"
+                style="width: 20rem"
+                matInput
+                name="semail"
+                [(ngModel)]="candidateForm.semail"
+                type="email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              />
+              <mat-error *ngIf="var4.errors?.required && var4.touched">
+                Secondary Email is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="var4.errors?.pattern">
+                Secondary Email is <strong>Invalid</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <br />
+        <!-- 4 -->
+        <h2 style="margin-left: 8rem">Address Info</h2>
+        <mat-grid-list cols="4" rowHeight="7rem">
+          <mat-grid-tile>
+            <label style="color: silver">Street</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Street</mat-label>
+              <input
+                [(ngModel)]="candidateForm.street"
+                name="street"
+                style="width: 20rem"
+                matInput
+                type="text"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <label style="color: silver">City</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">City</mat-label>
+              <input
+                [(ngModel)]="candidateForm.city"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="city"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- 5 -->
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left"
+              >State/Province</label
+            >
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="width: 22rem; text-align: left"
+              appearance="standard"
+            >
+              <mat-label style="color: black">State/Province</mat-label>
+              <input
+                [(ngModel)]="candidateForm.stateProvince"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="stateProvince"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Zip/Postal Code</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Zip/Postal Code</mat-label>
+              <input
+                #var5="ngModel"
+                [(ngModel)]="candidateForm.zipCode"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="zipCode"
+                maxlength="6"
+                pattern="[0-9]{6}$"
+              />
+              <mat-error *ngIf="var5.errors?.pattern">
+                Only Numerical values are <strong>allowed.</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left">Country</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="width: 22rem; text-align: left"
+              appearance="standard"
+            >
+              <mat-label style="color: black">Country</mat-label>
+              <input
+                [(ngModel)]="candidateForm.country"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="country"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <br />
+        <h2 style="margin-left: 8rem">Professional Details</h2>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left"
+              >Experience in Years</label
+            >
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="width: 22rem; text-align: left"
+              appearance="standard"
+            >
+              <mat-label style="color: black">Experience</mat-label>
+              <input
+                #var6="ngModel"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="exp"
+                [(ngModel)]="candidateForm.exp"
+                maxlength="2"
+                pattern="[0-9]{2}$"
+              />
+              <mat-error *ngIf="var6.errors?.pattern">
+                Only Numerical values are <strong>allowed.</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Highest Qualification Held</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="border-radius: 10%; text-decoration: black; width: 22rem"
+              appearance="standard"
+            >
+              <mat-label>Education</mat-label>
+              <mat-select
+                [(ngModel)]="candidateForm.qualification"
+                name="highestQualification"
+              >
+                <mat-option
+                  style="color: black"
+                  *ngFor="let qual of qualifications"
+                  [value]="qual.value"
+                >
+                  {{ qual.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left"
+              >Current Job Title</label
+            >
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="border-radius: 10%; text-decoration: black; width: 22rem"
+              appearance="standard"
+            >
+              <mat-label>Current Job Title</mat-label>
+              <mat-select
+                [(ngModel)]="candidateForm.currentJob"
+                name="currentJob"
+                style="color: silver"
+              >
+                <mat-option
+                  style="color: black"
+                  *ngFor="let jobs of currentJobs"
+                  [value]="jobs.value"
+                  [label]="jobs.value"
+                >
+                  {{ jobs.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Current Employer</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Current Employer</mat-label>
+              <input
+                [(ngModel)]="candidateForm.currentEmployer"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="currentEmployer"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left"
+              >Expected Salary</label
+            >
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="width: 22rem; text-align: left"
+              appearance="standard"
+            >
+              <mat-label style="color: black">Expected Salary</mat-label>
+              <input
+                #var7="ngModel"
+                maxlength="8"
+                style="width: 20rem"
+                [(ngModel)]="candidateForm.expectedSalary"
+                matInput
+                type="text"
+                name="expectedSalary"
+                pattern="[0-9]{1,8}$"
+              />
+              <mat-error *ngIf="var7.errors?.pattern">
+                Only Numerical values are <strong>allowed.</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Current Salary</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Current Salary</mat-label>
+              <input
+                #var8="ngModel"
+                maxlength="8"
+                style="width: 20rem"
+                [(ngModel)]="candidateForm.currentSalary"
+                matInput
+                type="text"
+                name="currentSalary"
+                pattern="[0-9]{1,8}$"
+              />
+              <mat-error *ngIf="var8.errors?.pattern">
+                Only Numerical values are <strong>allowed.</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left">Skill Set</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="width: 22rem; text-align: left"
+              appearance="standard"
+            >
+              <mat-label style="color: black">Skill Set</mat-label>
+              <input
+                [(ngModel)]="candidateForm.skill"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="skill"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Additional Info</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Additional Info</mat-label>
+              <input
+                [(ngModel)]="candidateForm.additionalInfo"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="additionalInfo"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left">Skype ID</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="width: 22rem; text-align: left"
+              appearance="standard"
+            >
+              <mat-label style="color: black">Skype ID</mat-label>
+              <input
+                [(ngModel)]="candidateForm.skype"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="skype"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Twitter</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-icon matSuffix>alternate_email</mat-icon>
+            <mat-form-field style="width: 22rem" appearance="standard">
+              <mat-label style="color: black">Twitter</mat-label>
+              <input
+                [(ngModel)]="candidateForm.twitter"
+                style="width: 20rem"
+                matInput
+                type="text"
+                name="twitter"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <br />
+        <h2 style="margin-left: 8rem">Other Info</h2>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left"
+              >Candidate Status</label
+            >
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="border-radius: 10%; text-decoration: black; width: 22rem"
+              appearance="standard"
+            >
+              <mat-label>Select Status</mat-label>
+              <mat-select
+                [(ngModel)]="candidateForm.candidateStatus"
+                name="status"
+                name="candidateStatus"
+                style="color: silver"
+              >
+                <mat-optgroup
+                  *ngFor="let group of status"
+                  [label]="group.category"
+                  [disabled]="group.disabled"
+                >
+                  <mat-option
+                    *ngFor="let item of group.items"
+                    [value]="item.value"
+                  >
+                    {{ item.value }}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <label style="color: silver">Source</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="border-radius: 10%; text-decoration: black; width: 22rem"
+              appearance="standard"
+            >
+              <mat-label>Select Source</mat-label>
+              <mat-select
+                [(ngModel)]="candidateForm.source"
+                name="source"
+                style="color: silver"
+              >
+                <mat-option
+                  style="color: black"
+                  *ngFor="let source of sources"
+                  [value]="source.value"
+                >
+                  {{ source.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver; text-align: left"
+              >Candidate Owner</label
+            >
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field
+              style="border-radius: 10%; text-decoration: black; width: 22rem"
+              appearance="standard"
+            >
+              <mat-label>Select Owner</mat-label>
+              <mat-select
+                [(ngModel)]="candidateForm.candidateOwner"
+                name="candidateOwner"
+                style="color: silver"
+              >
+                <mat-option
+                  style="color: black"
+                  *ngFor="let owner of owners"
+                  [value]="owner.value"
+                  [label]="owner.value"
+                >
+                  {{ owner.value }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <label style="color: silver">Email Opt Out</label>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <section class="example-section">
+              <mat-checkbox
+                [(ngModel)]="candidateForm.emailOption"
+                name="emailOption"
+                style="margin-right: 22rem"
+              ></mat-checkbox>
+            </section>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <br />
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <h2>Educational Details</h2>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <a style="color: blue; cursor: pointer" (click)="showDiv()"
+              >+ Add Educational Details</a
+            >
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- 1st Div -->
+
+        <div *ngIf="show">
+          <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Institute / School</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Institute / School</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.school_1"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="school_1"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Major / Department</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Major / Department</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.major_1"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="major_1"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Degree</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Degree</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.degree_1"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="degree_1"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Duration</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromMonth_1"
+                  name="fromMonth_1"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromYear_1"
+                  name="fromYear_1"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p>To</p>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toMonth_1"
+                  name="toMonth_1"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toYear_1"
+                  name="toYear_1"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <label style="color: silver">Currently Pursuing</label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <section class="example-section">
+                <mat-checkbox
+                  [(ngModel)]="candidateForm.pursuing_1"
+                  name="pursuing_1"
+                  style="margin-right: 22rem"
+                ></mat-checkbox>
+              </section>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="3" rowHeight="2rem">
+            <mat-grid-tile style="cursor: pointer" (click)="hideDiv()">
+              <button mat-mini-fab color="error">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <p style="color: red; margin-top: 1rem">
+                Delete Education Detail
+              </p>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <button
+                type="button"
+                (click)="showDivSecond()"
+                mat-stroked-button
+                color="primary"
+              >
+                + Add Another Education
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+
+        <!-- 2nd Div -->
+
+        <div *ngIf="showTwo">
+          <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Institute / School</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Institute / School</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.school_2"
+                  name="school_2"
+                  #school
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Major / Department</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Major / Department</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.major_2"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="major_2"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Degree</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Degree</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.degree_2"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="degree_2"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Duration</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromMonth_2"
+                  name="fromMonth_2"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromYear_2"
+                  name="fromYear_2"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p>To</p>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toMonth_2"
+                  style="color: silver"
+                  name="toMonth_2"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toYear_2"
+                  name="toYear_2"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <label style="color: silver">Currently Pursuing</label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <section class="example-section">
+                <mat-checkbox
+                  [(ngModel)]="candidateForm.pursuing_2"
+                  name="pursuing_2"
+                  style="margin-right: 22rem"
+                ></mat-checkbox>
+              </section>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="3" rowHeight="2rem">
+            <mat-grid-tile style="cursor: pointer" (click)="hideDivSecond()">
+              <button mat-mini-fab color="error">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <p style="color: red; margin-top: 1rem">
+                Delete Education Detail
+              </p>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <button
+                type="button"
+                (click)="showDivThird()"
+                mat-stroked-button
+                color="primary"
+              >
+                + Add Another Education
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+
+        <!-- 3rd Div -->
+
+        <div *ngIf="showThree">
+          <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Institute / School</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Institute / School</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.school_3"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="school_3"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Major / Department</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Major / Department</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.major_3"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="major_3"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Degree</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Degree</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.degree_3"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="degree_3"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Duration</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromMonth_3"
+                  name="fromMonth_3"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromYear_3"
+                  name="fromYear_3"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p>To</p>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toMonth_3"
+                  name="toMonth_3"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toYear_3"
+                  name="toYear_3"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <label style="color: silver">Currently Pursuing</label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <section class="example-section">
+                <mat-checkbox
+                  [(ngModel)]="candidateForm.pursuing_3"
+                  name="pursuing_3"
+                  style="margin-right: 22rem"
+                ></mat-checkbox>
+              </section>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="3" rowHeight="2rem">
+            <mat-grid-tile (click)="hideDivThird()" style="cursor: pointer">
+              <button mat-mini-fab color="error">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <p style="color: red; margin-top: 1rem">
+                Delete Education Detail
+              </p>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <button
+                type="button"
+                (click)="showDivFourth()"
+                mat-stroked-button
+                color="primary"
+              >
+                + Add Another Education
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+
+        <!-- 4th Div -->
+
+        <div *ngIf="showFourth">
+          <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Institute / School</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Institute / School</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.school_4"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="school_4"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Major / Department</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Major / Department</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.major_4"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="major_4"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Degree</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Degree</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.degree_4"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="degree_4"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Duration</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromMonth_4"
+                  name="fromMonth_4"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  ngModel
+                  name="candidateForm.fromYear_4"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p>To</p>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toMonth_4"
+                  name="toMonth_4"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toYear_4"
+                  name="toYear_4"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <label style="color: silver">Currently Pursuing</label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <section class="example-section">
+                <mat-checkbox
+                  [(ngModel)]="candidateForm.pursuing_4"
+                  name="pursuing_4"
+                  style="margin-right: 22rem"
+                ></mat-checkbox>
+              </section>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="3" rowHeight="2rem">
+            <mat-grid-tile (click)="hideDivFourth()" style="cursor: pointer">
+              <button mat-mini-fab color="error">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <p style="color: red; margin-top: 1rem">
+                Delete Education Detail
+              </p>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+        <mat-grid-list cols="4" rowHeight="3rem">
+          <mat-grid-tile>
+            <h2>Experience Details</h2>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <a
+              (click)="showXPOne()"
+              type="button"
+              style="color: blue; cursor: pointer"
+              >+ Add Experience Details</a
+            >
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <!-- 1st XP -->
+
+        <div *ngIf="XPOne">
+          <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Occupation / Title</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Occupation / Title</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.occupation1"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="occupation1"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Company</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Company</mat-label>
+                <input
+                  #company
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  [(ngModel)]="candidateForm.company1"
+                  name="company1"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Summary</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Summary</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.summary1"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="summary1"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Work Duration</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromMonth1"
+                  name="fromMonth1"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromYear1"
+                  name="fromYear1"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p>To</p>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toMonth1"
+                  name="toMonth1"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toYear1"
+                  name="toYear1"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <label style="color: silver">I currently work here</label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <section class="example-section">
+                <mat-checkbox
+                  [(ngModel)]="candidateForm.currentlyWorking1"
+                  name="currentlyWorking1"
+                  style="margin-right: 22rem"
+                ></mat-checkbox>
+              </section>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="3" rowHeight="2rem">
+            <mat-grid-tile (click)="hideXPOne()" style="cursor: pointer">
+              <button mat-mini-fab color="error">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <p style="color: red; margin-top: 1rem">
+                Delete Experience Detail
+              </p>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <button
+                type="button"
+                (click)="showXPTwo()"
+                mat-stroked-button
+                color="primary"
+              >
+                + Add Experience Details
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+
+        <!-- 2nd XP -->
+
+        <div *ngIf="XPTwo">
+          <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Occupation / Title</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Occupation / Title</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.occupation2"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="occupation2"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Company</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Company</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.company2"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="company2"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Summary</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Summary</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.summary2"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="summary2"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Work Duration</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromMonth2"
+                  name="fromMonth2"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromYear2"
+                  name="fromYear2"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p>To</p>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toMonth2"
+                  name="toMonth2"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toYear2"
+                  name="toYear2"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <label style="color: silver">I currently work here</label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <section class="example-section">
+                <mat-checkbox
+                  [(ngModel)]="candidateForm.currentlyWorking2"
+                  name="currentlyWorking2"
+                  style="margin-right: 22rem"
+                ></mat-checkbox>
+              </section>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="3" rowHeight="2rem">
+            <mat-grid-tile (click)="hideXPTwo()" style="cursor: pointer">
+              <button mat-mini-fab color="error">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <p style="color: red; margin-top: 1rem">
+                Delete Experience Detail
+              </p>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <button
+                type="button"
+                (click)="showXPThree()"
+                mat-stroked-button
+                color="primary"
+              >
+                + Add Experience Details
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+
+        <!-- 3rd XP -->
+
+        <div *ngIf="XPThree">
+          <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Occupation / Title</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Occupation / Title</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.occupation3"
+                  #occupation
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="occupation3"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Company</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Company</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.company3"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="company3"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Summary</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field style="width: 22rem" appearance="standard">
+                <mat-label style="color: black">Summary</mat-label>
+                <input
+                  [(ngModel)]="candidateForm.summary3"
+                  style="width: 20rem"
+                  matInput
+                  type="text"
+                  name="summary3"
+                />
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <div>
+                <label style="color: silver">Work Duration</label>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromMonth3"
+                  name="fromMonth3"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.fromYear3"
+                  name="fromYear3"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <p>To</p>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Month</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toMonth3"
+                  name="toMonth3"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let month of months"
+                    [value]="month"
+                    [label]="month"
+                  >
+                    {{ month }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                style="border-radius: 10%; text-decoration: black; width: 5rem"
+                appearance="standard"
+              >
+                <mat-label>Year</mat-label>
+                <mat-select
+                  [(ngModel)]="candidateForm.toYear3"
+                  name="toYear3"
+                  (click)="fillYears()"
+                  style="color: silver"
+                >
+                  <mat-option
+                    style="color: black"
+                    *ngFor="let year of years"
+                    [value]="year"
+                    [label]="year"
+                  >
+                    {{ year }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="4" rowHeight="3.5rem">
+            <mat-grid-tile>
+              <label style="color: silver">I currently work here</label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <section class="example-section">
+                <mat-checkbox
+                  [(ngModel)]="candidateForm.currentlyWorking3"
+                  name="currentlyWorking3"
+                  style="margin-right: 22rem"
+                ></mat-checkbox>
+              </section>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="3" rowHeight="2rem">
+            <mat-grid-tile (click)="hideXPThree()" style="cursor: pointer">
+              <button mat-mini-fab color="error">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <p style="color: red; margin-top: 1rem">
+                Delete Experience Detail
+              </p>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+
+        <!-- Attachment Information -->
+
+        <mat-grid-list cols="4" rowHeight="6rem">
+          <mat-grid-tile>
+            <h2>Attachment Information</h2>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list appearance="outline" cols="4" rowHeight="4rem">
+          <mat-grid-tile>
+            <div>
+              <mat-label style="color: silver">Resume</mat-label>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div>
+              <input
+                (change)="basicUpload1($event.target.files, candidateForm.name)"
+                type="file"
+                accept="application/pdf, .doc, .docx"
+              />
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <mat-label style="color: silver">
+                {{ uploadSuccess1 }}
+              </mat-label>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+          <mat-grid-tile>
+            <div>
+              <mat-label style="color: silver">Cover Letter</mat-label>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div>
+              <input
+                type="file"
+                accept="application/pdf, .doc, .docx"
+                (change)="basicUpload1($event.target.files, candidateForm.name)"
+              />
+            </div>
+            {{ uploadSuccess2 }}
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+          <mat-grid-tile>
+            <div>
+              <mat-label style="color: silver">Others</mat-label>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div>
+              <input
+                type="file"
+                accept="application/pdf, .doc, .docx"
+                (change)="basicUpload1($event.target.files, candidateForm.name)"
+              />
+            </div>
+            {{ uploadSuccess3 }}
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+          <mat-grid-tile>
+            <div>
+              <mat-label style="color: silver">Offer</mat-label>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div>
+              <input
+                type="file"
+                accept="application/pdf, .doc, .docx"
+                (change)="basicUpload1($event.target.files, candidateForm.name)"
+              />
+            </div>
+            {{ uploadSuccess4 }}
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list appearance="outline" cols="4" rowHeight="3.5rem">
+          <mat-grid-tile>
+            <div>
+              <mat-label style="color: silver">Contracts</mat-label>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <div>
+              <input
+                type="file"
+                accept="application/pdf, .doc, .docx"
+                (change)="basicUpload1($event.target.files, candidateForm.name)"
+              />
+            </div>
+            {{ uploadSuccess5 }}
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <mat-grid-list
+        cols="1"
+        rowHeight="4rem"
+        style="background-color: #f8f8f8"
+      >
+        <mat-grid-tile>
+          <button
+            type="submit"
+            mat-raised-button
+            class="btn btn-primary mr-4"
+            [disabled]="userForm.invalid"
+          >
+            Save
+          </button>
+          <button mat-raised-button class="btn btn-outline-secondary ml-3">
+            Cancel
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+
+    <!-- For Testing Purposes -->
+    <!-- <br>
+<mat-grid-list cols="1" rowHeight="4rem" style="background-color: #f8f8f8;">
+    <mat-grid-tile>
+        <button mat-raised-button class="btn btn-success ml-3" (click)='showDatabaseValues()'>Show Database Entries</button>
+        <button mat-raised-button class="btn btn-danger ml-3" (click)='getCandidatesByParams()'>Show Specific Database Entry</button>
+        <button mat-raised-button class="btn btn-danger ml-3" (click)='delCandidate()'>Delete Database Entry</button>
+    </mat-grid-tile>
+</mat-grid-list> -->
+
+    <!-- <ul *ngFor="let item of candidatesStored">
+    <li>{{item.name}}</li>
+</ul>
+
+<ul *ngFor="let i of candidateStored">
+    <li>{{i.name}}, {{i.title}}, {{i.mobile}} {{i.website}}</li>
+</ul> -->
+  </body>
+</html>

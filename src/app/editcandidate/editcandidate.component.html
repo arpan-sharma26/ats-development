@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Candidate</title>
+  </head>
+  <body>
+    <br /><br /><br /><br />
+    <mat-form-field style="margin-left: 20%; width: 60%; font-size: 1.5rem">
+      <input
+        type="text"
+        placeholder="Enter a name to filter data"
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+      />
+    </mat-form-field>
+    <br /><br />
+    <table
+      style="margin: auto; width: 80%"
+      mat-table
+      [dataSource]="listData"
+      class="mat-elevation-z10"
+      matSort
+    >
+      <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element._id }}</td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="name" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Candidate Name
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="email" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="mobile" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Mobile</th>
+        <td mat-cell *matCellDef="let element">{{ element.mobile }}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="semail" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let element">{{ element.city }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="source" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Source</th>
+        <td mat-cell *matCellDef="let element">{{ element.source }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Candidate Owner" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          Candidate Owner
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.candidateOwner }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Actions" style="padding: auto">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            style="margin-right: 1rem; background-color: blue; color: white"
+            mat-raised-button
+            routerLink="/editdetails/{{ element._id }}"
+            routerLinkActive="active"
+          >
+            Edit
+          </button>
+          <button
+            (click)="deleteEntry(element._id)"
+            mat-raised-button
+            color="warn"
+          >
+            Delete
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </body>
+</html>
+<br /><br />

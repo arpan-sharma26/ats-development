@@ -1,0 +1,78 @@
+<div>
+  <nav class="bg-dark">
+    <div style="margin-right: 0px" class="row pb-3 pt-3">
+      <a
+        style="font-size: large; margin-left: 5rem; color: black"
+        class="text-light"
+        routerLink="/"
+        routerLinkActive="active"
+        >Home</a
+      >
+      <a
+        style="font-size: large; margin-left: 5rem"
+        class="text-light"
+        routerLink="/jobs"
+        routerLinkActive="active"
+        >Jobs Openings</a
+      >
+      <a
+        style="font-size: large; margin-left: 5rem"
+        class="text-light"
+        routerLink="/editdetails"
+        routerLinkActive="inactive"
+        >Create Candidate</a
+      >
+      <a
+        style="font-size: large; margin-left: 5rem"
+        class="text-light"
+        routerLink="/editcandidate"
+        routerLinkActive="inactive"
+        >List of Candidates</a
+      >
+
+      <mat-form-field
+        style="
+          width: 5rem;
+          height: 1rem;
+          bottom: 2.5rem;
+          background-color: white;
+        "
+        class="offset-6"
+        appearance="standard"
+      >
+        <mat-select>
+          <mat-option style="background-color: gray; color: black">
+            <span
+              style="font-size: large"
+              routerLink="/"
+              routerLinkActive="active"
+              >Home</span
+            >
+          </mat-option>
+          <mat-option style="background-color: gray; color: black"
+            ><span
+              style="font-size: large"
+              routerLink="/jobs"
+              routerLinkActive="inactive"
+              >Jobs Openings</span
+            ></mat-option
+          >
+          <mat-option style="background-color: gray"
+            ><span style="font-size: large" routerLink="/editdetails"
+              >Create Candidate</span
+            ></mat-option
+          >
+          <mat-option style="background-color: gray"
+            ><span style="font-size: large" routerLink="/editcandidate"
+              >List of Candidates</span
+            ></mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>
+
+<!-- Route Views goes here. -->
