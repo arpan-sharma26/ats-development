@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { CandidateService } from '../candidate.service';
-import { Candidate } from '../candidate';
 import {
   FormGroup,
   FormControl,
   Validators,
   FormBuilder,
+  FormsModule,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,11 +18,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./editdetails.component.css'],
 })
 export class EditdetailsComponent implements OnInit {
-  public candidateId = this._route.snapshot.params.id;
+  public candidateId: any;
 
   candidateForm = new candidateTemplate();
-  // userForm = new candidateTemplate();
-  // newForm = new candidateTemplate();
 
   constructor(
     private http: HttpClient,
@@ -32,38 +30,40 @@ export class EditdetailsComponent implements OnInit {
     private _router: Router
   ) {}
 
-  singleCandidate: Candidate;
-
   ngOnInit() {
-    this.getCandidateData();
+    this.candidateId = this._route.snapshot.params.id;
+    console.log(this.candidateId);
+    if (this.candidateId) {
+      this.getCandidateData();
+    }
   }
 
   getCandidateData() {
     this.serv.getCurrentData(this.candidateId).subscribe((res) => {
       this.candidateForm = res[0];
+      console.log(this.candidateForm.name);
+      console.log(res[0]);
     });
   }
 
-  consoleEntry(values) {
-    this.serv.sendDataByID(this.candidateId, values).subscribe((result) => {
-      if (result) {
-        this.toast.success('Candidate record updated.');
-      }
-    });
-  }
-
-  uploadValues(values) {
-    this.serv.sendPost(values).subscribe((data) => {
-      if (data) {
-        this.toast.success('Data has been saved successfully.');
-        this._router.navigate(['/editcandidate']);
-      }
-    });
+  formData(values) {
+    if (this.candidateId) {
+      this.serv.sendDataByID(this.candidateId, values).subscribe((result) => {
+        if (result) {
+          this.toast.success('Candidate record updated.');
+        }
+      });
+    } else {
+      this.serv.sendPost(values).subscribe((data) => {
+        if (data) {
+          this.toast.success('Data has been saved successfully.');
+          this._router.navigate(['/editcandidate']);
+        }
+      });
+    }
   }
 
   // ngModel variables
-  var1;
-  _id;
   years = [
     '1950',
     '1951',
@@ -366,7 +366,6 @@ export class EditdetailsComponent implements OnInit {
 }
 
 class candidateTemplate {
-  id = 0;
   name: String;
   title: String;
   email: String;

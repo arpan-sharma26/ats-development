@@ -6,7 +6,12 @@
     <title>Create Candidate</title>
   </head>
   <body style="font-size: 1.3rem">
-    <form #userForm="ngForm" (ngSubmit)="consoleEntry(userForm.value)">
+    <form
+      name="form"
+      #candidateForm="ngForm"
+      (ngSubmit)="formData(candidateForm.value)"
+      novalidate
+    >
       <div>
         <mat-grid-list
           cols="2"
@@ -15,7 +20,8 @@
         >
           <mat-grid-tile>
             <h1 style="padding-top: 1rem">
-              {{ candidateForm.name ? "Edit Candidate" : "Create Candidate" }}
+              {{ candidateForm.name }}
+              {{ candidateId ? "Edit Candidate" : "Create Candidate" }}
             </h1>
           </mat-grid-tile>
 
@@ -24,9 +30,9 @@
               type="submit"
               mat-raised-button
               class="btn btn-primary mr-4"
-              [disabled]="userForm.invalid"
+              [disabled]="candidateForm.invalid"
             >
-              {{ candidateForm.name ? "Update" : "Save" }}
+              {{ candidateId ? "Update" : "Save" }}
             </button>
 
             <button
@@ -53,6 +59,7 @@
               <mat-label>Title</mat-label>
               <mat-select
                 required
+                type='hidden'
                 [(ngModel)]="candidateForm.title"
                 name="title"
               >
@@ -2104,9 +2111,9 @@
             type="submit"
             mat-raised-button
             class="btn btn-primary mr-4"
-            [disabled]="userForm.invalid"
+            [disabled]="candidateForm.invalid"
           >
-            {{ candidateForm.name ? "Update" : "Save" }}
+            {{ candidateId ? "Update" : "Save" }}
           </button>
 
           <button
