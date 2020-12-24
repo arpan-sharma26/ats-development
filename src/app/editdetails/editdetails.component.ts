@@ -406,7 +406,7 @@ class candidateTemplate {
   degree_2: String;
   monthFrom_2: String;
   yearFrom_2: String;
-  monthTo_2: any;
+  monthTo_2: String;
   yearTo_2: String;
   pursuing_2: Boolean;
   //

@@ -18,28 +18,21 @@
       <a
         style="font-size: large; margin-left: 5rem"
         class="text-light"
-        routerLink="/editdetails"
-        routerLinkActive="inactive"
-        >Create Candidate</a
-      >
-      <a
-        style="font-size: large; margin-left: 5rem"
-        class="text-light"
         routerLink="/editcandidate"
         routerLinkActive="inactive"
         >List of Candidates</a
       >
 
       <mat-form-field
-        style="
-          width: 5rem;
-          height: 1rem;
-          bottom: 2.5rem;
-          background-color: white;
-        "
-        class="offset-6"
+        style="width: 5rem; height: 1rem; bottom: 3rem; color: white"
+        class="offset-7"
         appearance="standard"
       >
+        <mat-label style="color: white"
+          ><span style="margin-left: 1rem" class="material-icons">
+            add
+          </span></mat-label
+        >
         <mat-select>
           <mat-option style="background-color: gray; color: black">
             <span
@@ -74,5 +67,3 @@
 </div>
 
 <router-outlet></router-outlet>
-
-<!-- Route Views goes here. -->

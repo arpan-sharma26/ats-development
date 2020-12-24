@@ -26,6 +26,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { JobProfileComponent } from './job-profile/job-profile.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CandidateComponent,
     JobopeningComponent,
     EditcandidateComponent,
-    EditdetailsComponent
+    EditdetailsComponent,
+    JobProfileComponent
   ],
   imports: [
     BrowserModule,

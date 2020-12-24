@@ -1,0 +1,266 @@
+<form #jobProfile="ngForm" (ngSubmit)="jobData()">
+  <div>
+    <mat-grid-list cols="2" rowHeight="4rem">
+      <mat-grid-tile>
+        <h1 style="padding-top: 1rem">
+          {{ postingTitle }} - <span> {{ deptName }} </span>
+        </h1>
+        {{ jobOpeningStatus }}
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <h2 style="margin-left: 8rem">Job Opening Information</h2>
+
+    <mat-grid-list cols="4" rowHeight="5rem">
+      <mat-grid-tile>
+        <label style="color: silver">Posting Title</label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field
+          style="width: 22rem"
+          appearance="standard"
+          color="accent"
+        >
+          <mat-label style="color: black">Posting Title</mat-label>
+          <input matInput required name="name" value="{{ postingTitle }}" />
+          <mat-error> Post Title is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <!-- Job Opening ID -->
+      <mat-grid-tile>
+        <label style="color: silver">Job Opening ID</label>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field style="width: 22rem" appearance="standard">
+          <mat-label style="color: black">Job ID</mat-label>
+          <input
+            style="width: 20rem"
+            matInput
+            required
+            type="email"
+            name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            value="{{ jobID }}"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- 2nd row -->
+    <mat-grid-list cols="4" rowHeight="5rem">
+      <mat-grid-tile>
+        <label style="color: silver">Title</label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field
+          style="width: 22rem"
+          appearance="standard"
+          color="accent"
+        >
+          <mat-label style="color: black">Title</mat-label>
+          <input matInput name="name" value="{{ title }}" />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label style="color: silver">Department Name</label>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field style="width: 22rem" appearance="standard">
+          <mat-label style="color: black">Department Name</mat-label>
+          <input
+            style="width: 20rem"
+            matInput
+            required
+            type="email"
+            name="email"
+            value="{{ deptName }}"
+          />
+          <mat-error> Department Name is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- 3rd row -->
+    <mat-grid-list cols="4" rowHeight="5rem">
+      <mat-grid-tile>
+        <label style="color: silver">Assigned Recruiter</label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field
+          style="width: 22rem"
+          appearance="standard"
+          color="accent"
+        >
+          <mat-label style="color: black">Recruiter</mat-label>
+          <input matInput name="name" value="{{ assignedRecruiter }}" />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label style="color: silver">Hiring Manager</label>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field style="width: 22rem" appearance="standard">
+          <mat-label style="color: black">Manager</mat-label>
+          <input
+            style="width: 20rem"
+            matInput
+            required
+            type="email"
+            name="email"
+            value="{{ hiringManager }}"
+          />
+          <mat-error> Department Name is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- 4th row -->
+    <mat-grid-list cols="4" rowHeight="5rem">
+      <mat-grid-tile>
+        <label style="color: silver">Target Date</label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field
+          style="width: 22rem"
+          appearance="standard"
+          color="accent"
+        >
+          <mat-label style="color: black">Date</mat-label>
+          <input matInput name="name" value="{{ targetDate }}" />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label style="color: silver">No. of Positions</label>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field style="width: 22rem" appearance="standard">
+          <mat-label style="color: black">Positions</mat-label>
+          <input
+            style="width: 20rem"
+            matInput
+            required
+            type="email"
+            name="email"
+            value="{{ numberOfPositions }}"
+          />
+          <mat-error>
+            No. of Positions are <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- 5th row -->
+    <mat-grid-list cols="4" rowHeight="5rem">
+      <mat-grid-tile>
+        <label style="color: silver">Job Opening Status</label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field
+          style="width: 22rem"
+          appearance="standard"
+          color="accent"
+        >
+          <mat-label style="color: black">Status</mat-label>
+          <input matInput name="name" value="{{ jobOpeningStatus }}" />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label style="color: silver">Date Opened</label>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field style="width: 22rem" appearance="standard">
+          <mat-label style="color: black">Date</mat-label>
+          <input
+            style="width: 20rem"
+            matInput
+            required
+            type="email"
+            name="email"
+            value="{{ dateOpened }}"
+          />
+          <mat-error> Opening date is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- 6th row -->
+    <mat-grid-list cols="4" rowHeight="5rem">
+      <mat-grid-tile>
+        <label style="color: silver">Industry</label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field
+          style="width: 22rem"
+          appearance="standard"
+          color="accent"
+        >
+          <mat-label style="color: black">Industry</mat-label>
+          <mat-select required type="hidden">
+            <mat-option *ngFor="let gender of industry" [value]="gender">
+              {{ gender }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label style="color: silver">Hiring Manager</label>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field style="width: 22rem" appearance="standard">
+          <mat-label style="color: black">Manager</mat-label>
+          <input
+            style="width: 20rem"
+            matInput
+            required
+            type="email"
+            name="email"
+            value="{{ hiringManager }}"
+          />
+          <mat-error> Department Name is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <!-- 3rd row -->
+    <mat-grid-list cols="4" rowHeight="5rem">
+      <mat-grid-tile>
+        <label style="color: silver">Assigned Recruiter</label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field
+          style="width: 22rem"
+          appearance="standard"
+          color="accent"
+        >
+          <mat-label style="color: black">Recruiter</mat-label>
+          <input matInput name="name" value="{{ assignedRecruiter }}" />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <label style="color: silver">Hiring Manager</label>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field style="width: 22rem" appearance="standard">
+          <mat-label style="color: black">Manager</mat-label>
+          <input
+            style="width: 20rem"
+            matInput
+            required
+            type="email"
+            name="email"
+            value="{{ hiringManager }}"
+          />
+          <mat-error> Department Name is <strong>required</strong> </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</form>
